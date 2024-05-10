@@ -1,35 +1,3 @@
-<!--php
-
-    if(isset($_POST['submit']) )
-    {
-        /*print_r($_POST['nome']);
-        print_r('<br>');
-        print_r($_POST['email']);
-        print_r('<br>');
-        print_r($_POST['number']);
-        print_r('<br>');
-        print_r($_POST['data']);
-        print_r('<br>');
-        print_r($_POST['Sexo']);
-        print_r('<br>');
-        print_r($_POST['lider']);
-        print_r('<br>');
-        print_r($_POST['cidade']);*/
-
-        include_once('config.php');
-
-        $nome = $_POST['nome'];
-        $email = $_POST['email'];
-        $number = $_POST['number'];
-        $data = $_POST['data'];
-        $Sexo = $_POST['Sexo'];
-        $lider = $_POST['lider'];
-        $cidade = $_POST['cidade'];
-
-        $result = mysqli_query($conexao, "INSERT INTO insc_ecd24(Nome, Email, Numero, Nascimento, Sexo, Lider, Cidade)
-         VALUES($nome,$email,$number,$data,$Sexo,$lider,$cidade)");
-    }
-?-->
 <!DOCTYPE html>
 <html lang="en">
 <head>
