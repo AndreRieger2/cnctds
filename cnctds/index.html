@@ -8,33 +8,30 @@
 </head>
 <body>
     <div class="caixa">
-    <img class="logoCnctds" src="LOGO CNCTDS PNG.png">
-    <div class="Box">
+        <img class="logoCnctds" src="LOGO CNCTDS PNG.png">
         <form action="https://sheetdb.io/api/v1/dggupm729pkyy"
         method="post"
         name="Inscrições ECD24"> 
+        <div class="Box">
                 <legend><b> Formulário de inscrição ECD CNCTDS</b></legend>
-                <br>
                 <div class="inputBox">
-                    <input type="text" name="data[Nome]" id="nome" class="inputUser" required>
                     <label for="nome" class="inputLabel"> Nome completo</label>
+                    <input type="text" name="data[Nome]" id="nome" class="inputUser" required>
                 </div>
-                <br>
                 <div class="inputBox">
-                    <input type="email" name="data[Email]" id="email" class="inputUser" required>
                     <label for="email" class="inputLabel"> Email</label>
+                    <input type="email" name="data[Email]" id="email" class="inputUser" required>
+                    
                 </div>
-                <br>
                 <div class="inputBox">
-                    <input type="number" name="data[Número]" id="número" class="inputUser" required>
                     <label for="número" class="inputLabel"> Celular </label>
+                    <input type="tel" name="data[Número]" id="número" class="inputUser" maxlength="15" placeholder="(XX) 9XXXX-XXXX" pattern="(\([0-9]{2}\))\s([9]{1})?([0-9]{4})-([0-9]{4})" required>
+                    <p>(XX) 9XXXX-XXXX</p>
                 </div>
-                <br>
                 <div class="inputBox">
                     <input type="date" name="data[Data]" id="data" class="inputUser data" required>
                     <label for="data" class="inputData"> Data de nascimento </label>
                 </div>
-                <br>
                 <div class="inputBox sexo">
                     <p>Sexo</p>
                     <input type="radio" name="data[Sexo]" id="Masculino" value="Masculino" required>
@@ -42,27 +39,24 @@
                     <br>
                     <input type="radio" name="data[Sexo]" id="Feminino" value="Feminino" required>
                     <label for="Feminino"> Feminino</label>
-                    <br>
                 </div>
-                <br>
                 <div class="inputBox">
-                    <input type="lider" name="data[Líder]" id="lider" class="inputUser" required>
                     <label for="lider" class="inputLabel"> Nome do seu líder</label>
+                    <input type="lider" name="data[Líder]" id="lider" class="inputUser" required>
                 </div>
-                <br>
                 <div class="inputBox">
-                    <input type="cidade" name="data[Cidade]" id="cidade" class="inputUser" required>
                     <label for="cidade" class="inputLabel"> Cidade </label>
+                    <input type="cidade" name="data[Cidade]" id="cidade" class="inputUser" required>
                 </div>
-                <br>
                 <div>
-                    <p>Comprovante de PIX</p>
-                    <input type="file" name="upload" id="upload" accept=".pdf, .img, .jpg, .png">
+                    <p class="paragrafo">Comprovante de PIX</p>
+                    <br>
+                    <input type="file" name="upload" id="upload" accept=".pdf, .img, .jpg, .png" class="upload">
+                    <button><label for="upload"> upload </label></button>
                 </div>
-                <br>
                 <button type="submit" name="submit" class="submit" href="formulario.html">enviar</button>
+            </div>
         </form>
-    </div>
     </div>
 </body>
 </html>
