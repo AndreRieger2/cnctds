@@ -7,6 +7,7 @@
     --cor-do-input: #e3e3e3;
 }
 body {
+    height: 100vw;
     background-image: linear-gradient(to bottom,var(--cor-de-fundo), #010138);
     color: var(--cor-da-fonte);
     font-family: Montserrat;
