@@ -1,0 +1,83 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+:root{
+    --cor-de-fundo: #12121c;
+    --cor-do-fomr: #ffffff;
+    --cor-da-fonte: #000000;
+    --cor-do-input: #e3e3e3;
+}
+body {
+    background-image: linear-gradient(to bottom,var(--cor-de-fundo), #010138);
+    color: var(--cor-da-fonte);
+    font-family: Montserrat;
+    font: 400;
+    font-size: 1.5vw;
+}
+.Box {
+    background-color: var(--cor-do-fomr);
+    border-radius: 1rem;
+    padding: 1rem;
+    margin: 30vw;
+    margin-top: 0;
+    margin-bottom: 5%;
+}
+.inputBox{
+    position: relative;
+    font-family: Arial;
+    font: 400;
+}
+.inputUser{
+    background: none;
+    border: none;
+    border-bottom: 1px solid var(--cor-da-fonte);
+    outline: none;
+    font-size: 2rem;
+    color: var(--cor-da-fonte);
+    width: 100%;
+    letter-spacing: 2px;
+}
+.inputLabel{
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    pointer-events: none;
+    transition: .5s;
+}
+.inputUser:focus ~ .inputLabel,
+.inputUser:valid ~ .inputLabel{
+    top: -1.5em;
+    font-size: 1.5em;
+}
+
+.inputData{
+    position: absolute;
+    top: 0.75rem;
+    left: 0px;
+}
+.data{
+    padding-top: 3rem;
+    font-size: 1em;
+    font-family: Arial;
+    font: 400;
+}
+.submit{
+    background-image: linear-gradient(to right,var(--cor-de-fundo), #181824);
+            width: 100%;
+            border: none;
+            padding: 1rem;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+            border-radius: 10px;
+}
+.logoCnctds{
+    margin:40%;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+.caixa {
+    display: flex;
+    justify-content: baseline;
+    flex-direction: column;
+    
+}
