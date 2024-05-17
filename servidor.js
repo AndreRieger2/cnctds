@@ -42,7 +42,7 @@ app.get('/favicon.ico', (req, res) => {
 app.post('/upload', upload.single('file'), async (req, res) => {
   try {
     const fileMetadata = {
-      name: req.file.originalname,
+      name: upload.single('nome'),
       parents: [FOLDER_ID],
     };
     const media = {
