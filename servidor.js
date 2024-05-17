@@ -4,7 +4,7 @@ app.post('/upload', upload.single('file'), async (req, res) => {
     if (!req.file) {
       return res.status(400).send('No file uploaded');
     }
-
+const port = process.env.PORT || 3000;
     const fileMetadata = {
       name: req.file.originalname,
       parents: [FOLDER_ID],
