@@ -2,13 +2,12 @@ import express from 'express';
 import multer from 'multer';
 import { google } from 'googleapis';
 import fs from 'fs';
-import path from 'path';
 
 const app = express();
 const port = process.env.PORT || 3000;
 
 // Configuração do multer para lidar com uploads de arquivos
-const upload = multer({ dest: 'uploads/' });
+const upload = multer();
 
 const CLIENT_ID = process.env.CLIENT_ID;
 const CLIENT_SECRET = process.env.CLIENT_SECRET;
@@ -34,7 +33,7 @@ app.post('/upload', upload.single('file'), async (req, res) => {
     };
     const media = {
       mimeType: req.file.mimetype,
-      body: fs.createReadStream(req.file.path),
+      body: req.file.buffer, // Use o buffer do arquivo diretamente
     };
     const file = await drive.files.create({
       resource: fileMetadata,
@@ -42,7 +41,6 @@ app.post('/upload', upload.single('file'), async (req, res) => {
       fields: 'id',
     });
     res.status(200).send(`File uploaded successfully! File ID: ${file.data.id}`);
-    fs.unlinkSync(req.file.path); // Remove o arquivo temporário após o upload
   } catch (error) {
     console.error('Error uploading file:', error);
     res.status(500).send('Error uploading file');
