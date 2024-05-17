@@ -10,11 +10,11 @@ const port = 3000;
 // Configuração do multer para lidar com uploads de arquivos
 const upload = multer({ dest: 'uploads/' });
 
-const CLIENT_ID = '399666542910-6pfgqmahn9iu949bk8l94istppur9g9n.apps.googleusercontent.com';
-const CLIENT_SECRET = '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';
-const REDIRECT_URI = 'http://localhost:3000/oauth2callback';
-const REFRESH_TOKEN = '1//0hnCVS7QAZTtvCgYIARAAGBESNwF-L9Ir7xBzgFAmwL8sH3qkcCAx8RLkfFN65JXfdqoTWSmj4w7aHzthLmzIe8Nt4y8sT-YPkW4';
-const FOLDER_ID = '1xFTYZYqlnF7MyUtgivzjxHPnoJNW9m0k'; // Substitua pelo ID da pasta de destino
+const CLIENT_ID = process.env.CLIENT_ID;
+const CLIENT_SECRET = process.env.CLIENT_SECRET;
+const REDIRECT_URI = process.env.REDIRECT_URI;
+const REFRESH_TOKEN = process.env.REFRESH_TOKEN;
+const FOLDER_ID = process.env.FOLDER_ID;
 
 const oauth2Client = new google.auth.OAuth2(
   CLIENT_ID,
