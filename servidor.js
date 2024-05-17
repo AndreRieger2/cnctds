@@ -57,7 +57,7 @@ app.post('/upload', upload.single('file'), async (req, res) => {
     res.status(200).send(`File uploaded successfully! File ID: ${file.data.id}`);
   } catch (error) {
     console.error('erro em enviar o arquivo', error);
-    res.status(500).send('Error uploading file');
+    res.status(500).send('erro em enviar o arquivo');
   }
 });
 
