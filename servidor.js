@@ -1,6 +1,7 @@
 import express from 'express';
 import multer from 'multer';
 import { google } from 'googleapis';
+import path from 'path';
 import fs from 'fs';
 
 const app = express();
@@ -25,6 +26,10 @@ oauth2Client.setCredentials({ refresh_token: REFRESH_TOKEN });
 
 const drive = google.drive({ version: 'v3', auth: oauth2Client });
 
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'index.html'));
+});
+
 app.post('/upload', upload.single('file'), async (req, res) => {
   try {
     const fileMetadata = {
@@ -33,7 +38,7 @@ app.post('/upload', upload.single('file'), async (req, res) => {
     };
     const media = {
       mimeType: req.file.mimetype,
-      body: req.file.buffer, // Use o buffer do arquivo diretamente
+      body: req.file.buffer,
     };
     const file = await drive.files.create({
       resource: fileMetadata,
@@ -49,7 +54,4 @@ app.post('/upload', upload.single('file'), async (req, res) => {
 
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);
-});
-app.get('/', (req, res) => {
-  res.send('Hello World!');
 });
