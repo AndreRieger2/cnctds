@@ -35,6 +35,10 @@ app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'views', 'index.html'));
 });
 
+app.get('/favicon.ico', (req, res) => {
+  res.sendStatus(204); // No Content
+});
+
 app.post('/upload', upload.single('file'), async (req, res) => {
   try {
     const fileMetadata = {
