@@ -2,7 +2,7 @@ import express from 'express';
 import multer from 'multer';
 import { google } from 'googleapis';
 import path from 'path';
-import fs from 'fs';
+import { fileURLToPath } from 'url';
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -26,8 +26,12 @@ oauth2Client.setCredentials({ refresh_token: REFRESH_TOKEN });
 
 const drive = google.drive({ version: 'v3', auth: oauth2Client });
 
+// Resolvendo o __dirname com ES Modules
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'index.html'));
+  res.sendFile(path.join(__dirname, 'views', 'index.html'));
 });
 
 app.post('/upload', upload.single('file'), async (req, res) => {
@@ -38,7 +42,7 @@ app.post('/upload', upload.single('file'), async (req, res) => {
     };
     const media = {
       mimeType: req.file.mimetype,
-      body: req.file.buffer,
+      body: Buffer.from(req.file.buffer), // Use o buffer do arquivo diretamente
     };
     const file = await drive.files.create({
       resource: fileMetadata,
