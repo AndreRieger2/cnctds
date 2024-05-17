@@ -8,7 +8,8 @@ const app = express();
 const port = process.env.PORT || 3000;
 
 // Configuração do multer para lidar com uploads de arquivos
-const upload = multer();
+const storage = multer.memoryStorage();
+const upload = multer({ storage });
 
 const CLIENT_ID = process.env.CLIENT_ID;
 const CLIENT_SECRET = process.env.CLIENT_SECRET;
