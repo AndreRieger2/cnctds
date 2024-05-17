@@ -5,7 +5,7 @@ import fs from 'fs';
 import path from 'path';
 
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000;
 
 // Configuração do multer para lidar com uploads de arquivos
 const upload = multer({ dest: 'uploads/' });
@@ -30,7 +30,7 @@ app.post('/upload', upload.single('file'), async (req, res) => {
   try {
     const fileMetadata = {
       name: req.file.originalname,
-      parents: [FOLDER_ID], // Define a pasta de destino
+      parents: [FOLDER_ID],
     };
     const media = {
       mimeType: req.file.mimetype,
@@ -42,8 +42,7 @@ app.post('/upload', upload.single('file'), async (req, res) => {
       fields: 'id',
     });
     res.status(200).send(`File uploaded successfully! File ID: ${file.data.id}`);
-    // Remove o arquivo temporário após o upload
-    fs.unlinkSync(req.file.path);
+    fs.unlinkSync(req.file.path); // Remove o arquivo temporário após o upload
   } catch (error) {
     console.error('Error uploading file:', error);
     res.status(500).send('Error uploading file');
