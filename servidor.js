@@ -2,34 +2,27 @@ import express from 'express';
 import multer from 'multer';
 import { google } from 'googleapis';
 import path from 'path';
-import { fileURLToPath } from 'url';
+import fs from 'fs';
 
 const app = express();
-const port = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3000;
 
-// Configuração do multer para lidar com uploads de arquivos
+// Configuração do multer para armazenamento na memória
 const storage = multer.memoryStorage();
-const upload = multer({ storage });
+const upload = multer({ storage: storage });
 
-const CLIENT_ID = process.env.CLIENT_ID;
-const CLIENT_SECRET = process.env.CLIENT_SECRET;
-const REDIRECT_URI = process.env.REDIRECT_URI;
-const REFRESH_TOKEN = process.env.REFRESH_TOKEN;
-const FOLDER_ID = process.env.FOLDER_ID;
+const CLIENT_ID = 'your-client-id';
+const CLIENT_SECRET = 'your-client-secret';
+const REDIRECT_URI = 'your-redirect-uri';
+const REFRESH_TOKEN = 'your-refresh-token';
+const FOLDER_ID = 'your-folder-id';
 
-const oauth2Client = new google.auth.OAuth2(
-  CLIENT_ID,
-  CLIENT_SECRET,
-  REDIRECT_URI
-);
-
+// Configuração do Google Drive
+const oauth2Client = new google.auth.OAuth2(CLIENT_ID, CLIENT_SECRET, REDIRECT_URI);
 oauth2Client.setCredentials({ refresh_token: REFRESH_TOKEN });
-
 const drive = google.drive({ version: 'v3', auth: oauth2Client });
 
-// Resolvendo o __dirname com ES Modules
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+app.use(express.static(path.join(__dirname, 'views')));
 
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'views', 'index.html'));
@@ -37,6 +30,11 @@ app.get('/', (req, res) => {
 
 app.post('/upload', upload.single('file'), async (req, res) => {
   try {
+    // Verificar se o arquivo foi enviado corretamente
+    if (!req.file) {
+      return res.status(400).send('No file uploaded');
+    }
+
     const fileMetadata = {
       name: req.file.originalname,
       parents: [FOLDER_ID],
@@ -52,11 +50,11 @@ app.post('/upload', upload.single('file'), async (req, res) => {
     });
     res.status(200).send(`File uploaded successfully! File ID: ${file.data.id}`);
   } catch (error) {
-    console.error('erro em enviar o arquivo', error);
-    res.status(500).send('erro em enviar o arquivo');
+    console.error('Error uploading file:', error);
+    res.status(500).send('Error uploading file');
   }
 });
 
-app.listen(port, () => {
-  console.log(`Server running at http://https://cnctds.vercel.app:${port}`);
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
 });
