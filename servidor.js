@@ -2,12 +2,18 @@ import express from 'express';
 import multer from 'multer';
 import { google } from 'googleapis';
 import path from 'path';
-import fs from 'fs';
+import { fileURLToPath } from 'url';
+import dotenv from 'dotenv';
+import { Readable } from 'stream';
+
+dotenv.config();
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Configuração do multer para armazenamento na memória
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 
@@ -17,7 +23,6 @@ const REDIRECT_URI = process.env.REDIRECT_URI;
 const REFRESH_TOKEN = process.env.REFRESH_TOKEN;
 const FOLDER_ID = process.env.FOLDER_ID;
 
-// Configuração do Google Drive
 const oauth2Client = new google.auth.OAuth2(CLIENT_ID, CLIENT_SECRET, REDIRECT_URI);
 oauth2Client.setCredentials({ refresh_token: REFRESH_TOKEN });
 const drive = google.drive({ version: 'v3', auth: oauth2Client });
@@ -30,10 +35,13 @@ app.get('/', (req, res) => {
 
 app.post('/upload', upload.single('file'), async (req, res) => {
   try {
-    // Verificar se o arquivo foi enviado corretamente
     if (!req.file) {
       return res.status(400).send('No file uploaded');
     }
+
+    const bufferStream = new Readable();
+    bufferStream.push(req.file.buffer);
+    bufferStream.push(null);
 
     const fileMetadata = {
       name: req.file.originalname,
@@ -41,8 +49,9 @@ app.post('/upload', upload.single('file'), async (req, res) => {
     };
     const media = {
       mimeType: req.file.mimetype,
-      body: Buffer.from(req.file.buffer), // Use o buffer do arquivo diretamente
+      body: bufferStream,
     };
+
     const file = await drive.files.create({
       resource: fileMetadata,
       media: media,
@@ -56,5 +65,4 @@ app.post('/upload', upload.single('file'), async (req, res) => {
 });
 
 app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
-});
+  console.log(`Server is running on
