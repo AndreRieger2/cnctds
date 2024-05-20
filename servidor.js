@@ -11,11 +11,11 @@ const PORT = process.env.PORT || 3000;
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 
-const CLIENT_ID = 'env.';
-const CLIENT_SECRET = 'your-client-secret';
-const REDIRECT_URI = 'your-redirect-uri';
-const REFRESH_TOKEN = 'your-refresh-token';
-const FOLDER_ID = 'your-folder-id';
+const CLIENT_ID = process.env.CLIENT_ID;
+const CLIENT_SECRET = process.env.CLIENT_SECRET;
+const REDIRECT_URI = process.env.REDIRECT_URI;
+const REFRESH_TOKEN = process.env.REFRESH_TOKEN;
+const FOLDER_ID = process.env.FOLDER_ID;
 
 // Configuração do Google Drive
 const oauth2Client = new google.auth.OAuth2(CLIENT_ID, CLIENT_SECRET, REDIRECT_URI);
