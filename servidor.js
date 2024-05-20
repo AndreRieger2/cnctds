@@ -2,7 +2,11 @@ import express from 'express';
 import multer from 'multer';
 import { google } from 'googleapis';
 import path from 'path';
-import fs from 'fs';
+import { fileURLToPath } from 'url';
+
+// Configuração de __dirname para módulos ES
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -11,11 +15,11 @@ const PORT = process.env.PORT || 3000;
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 
-const CLIENT_ID = 'your-client-id';
-const CLIENT_SECRET = 'your-client-secret';
-const REDIRECT_URI = 'your-redirect-uri';
-const REFRESH_TOKEN = 'your-refresh-token';
-const FOLDER_ID = 'your-folder-id';
+const CLIENT_ID = process.env.CLIENT_ID || 'your-client-id';
+const CLIENT_SECRET = process.env.CLIENT_SECRET || 'your-client-secret';
+const REDIRECT_URI = process.env.REDIRECT_URI || 'your-redirect-uri';
+const REFRESH_TOKEN = process.env.REFRESH_TOKEN || 'your-refresh-token';
+const FOLDER_ID = process.env.FOLDER_ID || 'your-folder-id';
 
 // Configuração do Google Drive
 const oauth2Client = new google.auth.OAuth2(CLIENT_ID, CLIENT_SECRET, REDIRECT_URI);
@@ -30,7 +34,6 @@ app.get('/', (req, res) => {
 
 app.post('/upload', upload.single('file'), async (req, res) => {
   try {
-    // Verificar se o arquivo foi enviado corretamente
     if (!req.file) {
       return res.status(400).send('No file uploaded');
     }
@@ -41,8 +44,9 @@ app.post('/upload', upload.single('file'), async (req, res) => {
     };
     const media = {
       mimeType: req.file.mimetype,
-      body: Buffer.from(req.file.buffer), // Use o buffer do arquivo diretamente
+      body: Buffer.from(req.file.buffer),
     };
+
     const file = await drive.files.create({
       resource: fileMetadata,
       media: media,
