@@ -35,8 +35,8 @@ app.get('/', (req, res) => {
 
 app.post('/upload', upload.single('file'), async (req, res) => {
   try {
-    if (!req.file) {
-      return res.status(400).send('No file uploaded');
+    if (!req.file || !req.body.username) {
+      return res.status(400).send('No file uploaded or username missing');
     }
 
     const bufferStream = new Readable();
@@ -44,7 +44,7 @@ app.post('/upload', upload.single('file'), async (req, res) => {
     bufferStream.push(null);
 
     const fileMetadata = {
-      name: req.file.originalname,
+      name: `${req.body.username}-${req.file.originalname}`,
       parents: [FOLDER_ID],
     };
     const media = {
