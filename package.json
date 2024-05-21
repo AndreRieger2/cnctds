@@ -1,20 +1,16 @@
 {
-  "name": "cnctds",
+  "name": "seu-projeto",
   "version": "1.0.0",
-  "description": "Um exemplo de projeto Node.js para Vercel",
+  "description": "Projeto de upload de arquivos para Google Drive",
   "main": "servidor.js",
   "scripts": {
     "start": "node servidor.js"
   },
-  "engines": {
-    "node": ">=20.0.0"
-  },
   "dependencies": {
     "express": "^4.17.1",
     "multer": "^1.4.2",
-    "googleapis": "^78.0.0"
+    "googleapis": "^100.0.0",
+    "dotenv": "^8.2.0"
   },
-  "devDependencies": {},
-  "author": "Andre",
-  "license": "MIT"
+  "type": "module"
 }
