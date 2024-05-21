@@ -57,7 +57,7 @@ app.post('/upload', upload.single('file'), async (req, res) => {
       media: media,
       fields: 'id',
     });
-    res.status(200).send(`Arquivo enviado com sucesso`);
+    res.redirect('/views/success.html');
   } catch (error) {
     console.error('Error uploading file:', error);
     res.status(500).send('Error uploading file');
