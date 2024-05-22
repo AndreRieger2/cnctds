@@ -73,7 +73,7 @@ app.post('/upload', upload.single('file'), async (req, res) => {
       formData['data[Sexo]'],
       formData['data[Líder]'],
       formData['data[Cidade]'],
-      req.body.username,
+      req.body.['data[Nome]'],
       file.data.id  // ID do arquivo no Google Drive
     ];
 
