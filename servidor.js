@@ -73,7 +73,6 @@ app.post('/upload', upload.single('file'), async (req, res) => {
       formData['data[Sexo]'],
       formData['data[Líder]'],
       formData['data[Cidade]'],
-      req.body.['data[Nome]'],
       file.data.id  // ID do arquivo no Google Drive
     ];
 
@@ -86,7 +85,7 @@ app.post('/upload', upload.single('file'), async (req, res) => {
       },
     });
 
-    res.redirect('/success.html');
+    res.redirect('/views/success.html');
   } catch (error) {
     console.error('Error uploading file:', error);
     res.status(500).send('Error uploading file');
