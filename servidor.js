@@ -42,16 +42,24 @@ app.get('/', (req, res) => {
 app.post('/upload', upload.single('file'), async (req, res) => {
   try {
     if (!req.file) {
+      console.error('No file uploaded');
       return res.status(400).send('No file uploaded');
     }
 
+    console.log('Form data received:', req.body);
+
     const nomeCompleto = req.body['data[Nome]'];
+    if (!nomeCompleto) {
+      console.error('Nome completo não fornecido');
+      return res.status(400).send('Nome completo não fornecido');
+    }
+
     const bufferStream = new Readable();
     bufferStream.push(req.file.buffer);
     bufferStream.push(null);
 
     const fileMetadata = {
-      name: req.body['data[Nome]'],
+      name: nomeCompleto,
       parents: [FOLDER_ID],
     };
     const media = {
@@ -76,6 +84,8 @@ app.post('/upload', upload.single('file'), async (req, res) => {
       formData['data[Cidade]'],
       file.data.id  // ID do arquivo no Google Drive
     ];
+
+    console.log('Sheet data to append:', sheetData);
 
     await sheets.spreadsheets.values.append({
       spreadsheetId: SHEET_ID,
