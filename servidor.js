@@ -41,16 +41,17 @@ app.get('/', (req, res) => {
 
 app.post('/upload', upload.single('file'), async (req, res) => {
   try {
-    if (!req.file || !req.body['data[Nome]']) {
-      return res.status(400).send('No file uploaded or username missing');
+    if (!req.file) {
+      return res.status(400).send('No file uploaded');
     }
 
+    const nomeCompleto = req.body['data[Nome]'];
     const bufferStream = new Readable();
     bufferStream.push(req.file.buffer);
     bufferStream.push(null);
 
     const fileMetadata = {
-      name: `${req.body['data[Nome]']}`,
+      name: nomeCompleto,
       parents: [FOLDER_ID],
     };
     const media = {
@@ -85,7 +86,7 @@ app.post('/upload', upload.single('file'), async (req, res) => {
       },
     });
 
-    res.redirect('/views/success.html');
+    res.redirect('/success.html');
   } catch (error) {
     console.error('Error uploading file:', error);
     res.status(500).send('Error uploading file');
