@@ -3,10 +3,13 @@ import multer from 'multer';
 import { google } from 'googleapis';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import dotenv from 'dotenv';
 import { Readable } from 'stream';
 
-dotenv.config();
+// Carregar dotenv apenas em desenvolvimento
+if (process.env.NODE_ENV !== 'production') {
+    const dotenv = await import('dotenv');
+    dotenv.config();
+}
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
