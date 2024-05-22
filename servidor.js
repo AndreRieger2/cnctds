@@ -51,7 +51,7 @@ app.post('/upload', upload.single('file'), async (req, res) => {
     bufferStream.push(null);
 
     const fileMetadata = {
-      name: nomeCompleto,
+      name: req.body['data[Nome]',
       parents: [FOLDER_ID],
     };
     const media = {
