@@ -41,7 +41,7 @@ app.get('/', (req, res) => {
 
 app.post('/upload', upload.single('file'), async (req, res) => {
   try {
-    if (!req.file || !req.body.username) {
+    if (!req.file || !req.body['data[Nome]']) {
       return res.status(400).send('No file uploaded or username missing');
     }
 
@@ -50,7 +50,7 @@ app.post('/upload', upload.single('file'), async (req, res) => {
     bufferStream.push(null);
 
     const fileMetadata = {
-      name: `${req.body.username} - ${req.body['data[Nome]']}`,
+      name: `${req.body['data[Nome]']}`,
       parents: [FOLDER_ID],
     };
     const media = {
