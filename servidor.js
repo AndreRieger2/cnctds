@@ -75,13 +75,13 @@ app.post('/upload', upload.single('file'), async (req, res) => {
 
     const formData = req.body;
     const sheetData = [
-      formData['data[Nome]'],
-      formData['data[Email]'],
-      formData['data[Número]'],
-      formData['data[Data]'],
-      formData['data[Sexo]'],
-      formData['data[Líder]'],
-      formData['data[Cidade]'],
+      formData['Nome'],
+      formData['Email'],
+      formData['Número'],
+      formData['Data'],
+      formData['Sexo'],
+      formData['Líder'],
+      formData['Cidade'],
       file.data.id  // ID do arquivo no Google Drive
     ];
 
