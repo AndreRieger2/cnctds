@@ -98,7 +98,7 @@ app.post('/upload', upload.single('file'), async (req, res) => {
 
     res.redirect('/success.html');
   } catch (error) {
-    console.error('Error uploading file:', error);
+    console.error('Error uploading file:', error.message);
     res.status(500).send('Error uploading file');
   }
 });
