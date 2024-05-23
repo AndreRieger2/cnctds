@@ -24,7 +24,7 @@ const CLIENT_ID = process.env.CLIENT_ID;
 const CLIENT_SECRET = process.env.CLIENT_SECRET;
 const REDIRECT_URI = process.env.REDIRECT_URI;
 const REFRESH_TOKEN = process.env.REFRESH_TOKEN;
-const SHEET_ID = process.env.SHEET_ID;  // ID da planilha do Google Sheets
+const SHEET_ID = '1bbLf6fdApzetkDdq_HWMCFVQHmyyUDu7MgEZOaNnTac';  // ID da planilha do Google Sheets
 const FOLDER_ID = process.env.FOLDER_ID;
 
 const oauth2Client = new google.auth.OAuth2(CLIENT_ID, CLIENT_SECRET, REDIRECT_URI);
