@@ -89,7 +89,7 @@ app.post('/upload', upload.single('file'), async (req, res) => {
 
     await sheets.spreadsheets.values.append({
       spreadsheetId: SHEET_ID,
-      range: 'Inscricoes!A2', // Ajuste para o intervalo adequado
+      range: 'Inscricoes!A1', // Ajuste para o intervalo adequado
       valueInputOption: 'USER_ENTERED',
       resource: {
         values: [sheetData],
