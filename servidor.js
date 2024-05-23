@@ -36,7 +36,7 @@ app.use(express.static(path.join(__dirname, 'views')));
 app.use(express.urlencoded({ extended: true }));
 
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'views', 'imagem.html'));
+    res.sendFile(path.join(__dirname, 'views', 'index.html'));
 });
 
 app.post('/upload', upload.single('file'), async (req, res) => {
