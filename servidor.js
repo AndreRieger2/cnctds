@@ -48,8 +48,8 @@ app.post('/upload', upload.single('file'), async (req, res) => {
 
         console.log('Form data received:', req.body);
 
-        const formData = req.body.data;
-        const nomeCompleto = formData.Nome;
+        const formData = req.body;
+        const nomeCompleto = formData.data.Nome;
         if (!nomeCompleto) {
             console.error('Nome completo não fornecido');
             return res.status(400).send('Nome completo não fornecido');
