@@ -77,10 +77,10 @@ app.post('/upload', upload.single('file'), async (req, res) => {
     const sheetData = [
       formData.Nome,
       formData.Email,
-      formData.Numero,  // Corrigido para Numero
+      formData.Número,  // Corrigido para Numero
       formData.Data,
       formData.Sexo,
-      formData.Lider,
+      formData.Líder,
       formData.Cidade,
       file.data.id  // ID do arquivo no Google Drive
     ];
