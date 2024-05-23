@@ -4,12 +4,9 @@ import { google } from 'googleapis';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { Readable } from 'stream';
+import dotenv from 'dotenv';
 
-// Carregar dotenv apenas em desenvolvimento
-if (process.env.NODE_ENV !== 'production') {
-    const dotenv = await import('dotenv');
-    dotenv.config();
-}
+dotenv.config();
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -77,7 +74,7 @@ app.post('/upload', upload.single('file'), async (req, res) => {
         const sheetData = [
             formData.Nome,
             formData.Email,
-            formData.Numero,  // Corrigido para Numero
+            formData.Numero,
             formData.Data,
             formData.Sexo,
             formData.Lider,
