@@ -48,7 +48,8 @@ app.post('/upload', upload.single('file'), async (req, res) => {
 
     console.log('Form data received:', req.body);
 
-    const nomeCompleto = req.body['Nome'];
+    const formData = req.body.data;
+    const nomeCompleto = formData.Nome;
     if (!nomeCompleto) {
       console.error('Nome completo não fornecido');
       return res.status(400).send('Nome completo não fornecido');
@@ -73,15 +74,14 @@ app.post('/upload', upload.single('file'), async (req, res) => {
       fields: 'id',
     });
 
-    const formData = req.body;
     const sheetData = [
-      formData['Nome'],
-      formData['Email'],
-      formData['Telefone'],
-      formData['Data'],
-      formData['Sexo'],
-      formData['Lider'],
-      formData['Cidade'],
+      formData.Nome,
+      formData.Email,
+      formData.Telefone,
+      formData.Data,
+      formData.Sexo,
+      formData.Lider,
+      formData.Cidade,
       file.data.id  // ID do arquivo no Google Drive
     ];
 
@@ -89,7 +89,7 @@ app.post('/upload', upload.single('file'), async (req, res) => {
 
     await sheets.spreadsheets.values.append({
       spreadsheetId: SHEET_ID,
-      range: 'Sheet1!A2', // Ajuste para o intervalo adequado
+      range: 'Sheet1!A1', // Ajuste para o intervalo adequado
       valueInputOption: 'USER_ENTERED',
       resource: {
         values: [sheetData],
