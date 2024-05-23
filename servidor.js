@@ -77,7 +77,7 @@ app.post('/upload', upload.single('file'), async (req, res) => {
     const sheetData = [
       formData.Nome,
       formData.Email,
-      formData.Numero,
+      formData.Numero,  // Corrigido para Numero
       formData.Data,
       formData.Sexo,
       formData.Lider,
