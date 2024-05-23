@@ -46,7 +46,7 @@ app.post('/upload', upload.single('file'), async (req, res) => {
             return res.status(400).send('No file uploaded');
         }
 
-        console.log('Form data received:', req.body.Nome);
+        console.log('Form data received:', req.body);
 
         const formData = req.body;
         const nomeCompleto = formData.Nome;
