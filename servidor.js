@@ -48,7 +48,7 @@ app.post('/upload', upload.single('file'), async (req, res) => {
 
         console.log('Form data received:', req.body);
 
-        const formData = req.body;
+        const formData = req.body.data;
         const nomeCompleto = formData.Nome;
         if (!nomeCompleto) {
             console.error('Nome completo não fornecido');
@@ -75,14 +75,14 @@ app.post('/upload', upload.single('file'), async (req, res) => {
         });
 
         const sheetData = [
-            formData.Nome,
-            formData.Email,
-            formData.Telefone,  // Corrigido para Numero
-            formData.Data,
-            formData.Sexo,
-            formData.Lider,
-            formData.Cidade,
-            file.data.id  // ID do arquivo no Google Drive
+          formData['data[Nome]'],
+          formData['data[Email]'],
+          formData['data[Telefone]'],
+          formData['data[Data]'],
+          formData['data[Sexo]'],
+          formData['data[Lider]'],
+          formData['data[Cidade]'],
+          file.data.id  // ID do arquivo no Google Drive
         ];
 
         console.log('Sheet data to append:', sheetData);
