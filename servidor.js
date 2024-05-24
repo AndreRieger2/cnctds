@@ -89,11 +89,12 @@ app.post('/upload', upload.single('file'), async (req, res) => {
         // Debug: Verificando os valores de SHEET_ID e range
         console.log('SHEET_ID:', SHEET_ID);
         console.log('Range: Inscrições!A1');
+        console.log('Req:', req.body);
 
         await sheets.spreadsheets.values.append({
             spreadsheetId: SHEET_ID,
             range: 'Inscrições!A1', // Ajuste para o intervalo adequado
-            valueInputOption: 'RAW',
+            valueInputOption: 'USER_ENTERED',
             resource: {
                 values: [sheetData],
             },
@@ -105,7 +106,7 @@ app.post('/upload', upload.single('file'), async (req, res) => {
         if (error.response && error.response.data) {
             console.error('Google API error details:', error.response.data);
         }
-        res.status(500).send('Error uploading file');
+        res.status(999).send('Error uploading file');
     }
 });
 
