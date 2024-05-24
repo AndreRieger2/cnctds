@@ -82,7 +82,6 @@ app.post('/upload', upload.single('file'), async (req, res) => {
             formData.Sexo,
             formData.Lider,
             formData.Cidade,
-            file.data.id
         ];
 
         console.log('Sheet data to append:', sheetData);
