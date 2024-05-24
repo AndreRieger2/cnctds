@@ -1,3 +1,44 @@
+import express from 'express';
+import multer from 'multer';
+import { google } from 'googleapis';
+import path from 'path';
+import { fileURLToPath } from 'url';
+import { Readable } from 'stream';
+
+// Carregar dotenv apenas em desenvolvimento
+if (process.env.NODE_ENV !== 'production') {
+    const dotenv = await import('dotenv');
+    dotenv.config();
+}
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+const app = express();
+const PORT = process.env.PORT || 3000;
+
+const storage = multer.memoryStorage();
+const upload = multer({ storage: storage });
+
+const CLIENT_ID = process.env.CLIENT_ID;
+const CLIENT_SECRET = process.env.CLIENT_SECRET;
+const REDIRECT_URI = process.env.REDIRECT_URI;
+const REFRESH_TOKEN = process.env.REFRESH_TOKEN;
+const SHEET_ID = process.env.SHEET_ID;  // ID da planilha do Google Sheets
+const FOLDER_ID = process.env.FOLDER_ID;
+
+const oauth2Client = new google.auth.OAuth2(CLIENT_ID, CLIENT_SECRET, REDIRECT_URI);
+oauth2Client.setCredentials({ refresh_token: REFRESH_TOKEN });
+const drive = google.drive({ version: 'v3', auth: oauth2Client });
+const sheets = google.sheets({ version: 'v4', auth: oauth2Client });
+
+app.use(express.static(path.join(__dirname, 'views')));
+app.use(express.urlencoded({ extended: true }));
+
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'views', 'index.html'));
+});
+
 app.post('/upload', upload.single('file'), async (req, res) => {
     try {
         if (!req.file) {
@@ -33,7 +74,7 @@ app.post('/upload', upload.single('file'), async (req, res) => {
             fields: 'id',
         });
 
-        const sheetData = [
+          const sheetData = [
             formData.Nome,
             formData.Email,
             formData.Telefone,
@@ -41,16 +82,14 @@ app.post('/upload', upload.single('file'), async (req, res) => {
             formData.Sexo,
             formData.Lider,
             formData.Cidade,
-            file.data.id
         ];
 
         console.log('Sheet data to append:', sheetData);
 
-        // Teste básico para verificar o acesso à planilha
-        const test = await sheets.spreadsheets.get({
-            spreadsheetId: SHEET_ID,
-        });
-        console.log('Spreadsheet metadata:', test.data);
+        // Debug: Verificando os valores de SHEET_ID e range
+        console.log('SHEET_ID:', SHEET_ID);
+        console.log('Range: Inscrições!A1');
+        console.log('Req:', req);
 
         await sheets.spreadsheets.values.append({
             spreadsheetId: SHEET_ID,
@@ -66,10 +105,11 @@ app.post('/upload', upload.single('file'), async (req, res) => {
         console.error('Error uploading file:', error.message);
         if (error.response && error.response.data) {
             console.error('Google API error details:', error.response.data);
-            if (error.response.status === 401) {
-                console.error('Authentication error. Please check your OAuth2 credentials.');
-            }
         }
-        res.status(500).send('Error uploading file');
+        res.status(999).send('Error uploading file');
     }
+});
+
+app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
 });
