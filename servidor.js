@@ -89,7 +89,7 @@ app.post('/upload', upload.single('file'), async (req, res) => {
         // Debug: Verificando os valores de SHEET_ID e range
         console.log('SHEET_ID:', SHEET_ID);
         console.log('Range: Inscrições!A1');
-        console.log('Req:', req.body);
+        console.log('Req:', req);
 
         await sheets.spreadsheets.values.append({
             spreadsheetId: SHEET_ID,
